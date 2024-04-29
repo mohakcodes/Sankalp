@@ -1,26 +1,33 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup>
+import {ref, computed} from 'vue';
+import HeaderNav from './components/Header-Nav.vue';
+import HomePage from './components/HomePage.vue';
+// import AboutPage from './components/AboutPage.vue';
+import LoginPage from './components/LoginPage.vue';
+import SignupPage from './components/SignupPage.vue';
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+const routes = [
+  { path: '/', component: HomePage },
+  // { path: '/about', component: AboutPage },
+  { path: '/login', component: LoginPage },
+  { path: '/signup', component: SignupPage },
+];
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const currentPath = ref(window.location.pathname); // Use pathname for path-based routing
+
+window.addEventListener('popstate', () => {
+  currentPath.value = window.location.pathname;
+});
+
+const currentView = computed(() => {
+  const matchingRoute = routes.find(route => route.path === currentPath.value);
+  return matchingRoute ? matchingRoute.component : HomePage;
+});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <div id="app">
+    <HeaderNav :routes="routes" />
+    <component :is="currentView" />
+  </div>
+</template>
