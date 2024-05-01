@@ -2,18 +2,16 @@
 import {ref, computed} from 'vue';
 import HeaderNav from './components/Header-Nav.vue';
 import HomePage from './components/HomePage.vue';
-// import AboutPage from './components/AboutPage.vue';
 import LoginPage from './components/LoginPage.vue';
 import SignupPage from './components/SignupPage.vue';
 
 const routes = [
   { path: '/', component: HomePage },
-  // { path: '/about', component: AboutPage },
-  { path: '/login', component: LoginPage },
-  { path: '/signup', component: SignupPage },
+  { path: '/auth/login', component: LoginPage },
+  { path: '/auth/signup', component: SignupPage },
 ];
 
-const currentPath = ref(window.location.pathname); // Use pathname for path-based routing
+const currentPath = ref(window.location.pathname);
 
 window.addEventListener('popstate', () => {
   currentPath.value = window.location.pathname;
