@@ -1,0 +1,1 @@
+export const API_URL = "https://sankalp-api-ivva.onrender.com";
